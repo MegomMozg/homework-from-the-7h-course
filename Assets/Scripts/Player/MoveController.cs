@@ -6,43 +6,41 @@ namespace PlatformerMVC
 {
     public class MoveController : IMoveController
     {
+        private Vector2 Vector;
         private bool isFacingRight = true;
-        public void Move(IPlayerBehavior playerBehavior, ISpriteAnimatorController spriteAnimatorController, LevelObjectView levelObjectView)
+        public void Move(IPlayerBehavior playerBehavior)
         {
-            float move = Input.GetAxis("Horizontal");
-            playerBehavior.Rigidbody.velocity = new Vector2(move * GameSettings.PLAYER_SPEED, playerBehavior.Rigidbody.velocity.y);
-
-            if (move > 0 && !isFacingRight)
-            {
-                Flip(playerBehavior);
-                MoveAnim(spriteAnimatorController, levelObjectView);
-            }
-            else if (move < 0 && isFacingRight)
-            {
-                Flip(playerBehavior);
-                MoveAnim(spriteAnimatorController, levelObjectView);
-
-            }
-            else if (move == 0)
-            {
-                spriteAnimatorController.StartAnimations(levelObjectView._spriteRenderer, AnimState.idle, true);
-            }
-
+            Vector = playerBehavior.vector2;
+            Vector.x = Input.GetAxis("Horizontal");
+            playerBehavior.animator.SetFloat("Move", Mathf.Abs(Vector.x));
+            playerBehavior.Rigidbody.velocity = new Vector2(Vector.x * GameSettings.PLAYER_SPEED, playerBehavior.Rigidbody.velocity.y);
+            
+            
+            Flip(playerBehavior, Vector.x);
         }
-        private void MoveAnim(ISpriteAnimatorController spriteAnimatorController, LevelObjectView levelObjectView)
+        public void Jump(IPlayerBehavior playerBehavior, IGroundCheck groundCheck)
         {
-            spriteAnimatorController.StopAnimations(levelObjectView._spriteRenderer);
-            spriteAnimatorController.StartAnimations(levelObjectView._spriteRenderer, AnimState.Run, true);
+            
+            if (Input.GetKeyDown(KeyCode.Space) && groundCheck.OnGround)
+            {
+                playerBehavior.Rigidbody.AddForce(Vector2.up * GameSettings.PLAYER_JUMPFORCE);
+            }
+            groundCheck.OnGround = Physics2D.OverlapCircle(groundCheck.Transform.position, 0.7f, groundCheck.Ground);
+            playerBehavior.animator.SetBool("Jump", groundCheck.OnGround);
         }
-        private void Flip(IPlayerBehavior playerBehavior)
+        
+        private void Flip(IPlayerBehavior playerBehavior, float move)
         {
-            isFacingRight = !isFacingRight;
+            if ((move > 0 && !isFacingRight) || (move < 0 && isFacingRight))
+            {
+                Vector3 theScale = playerBehavior._Transform.localScale;
 
-            Vector3 theScale = playerBehavior._Transform.localScale;
+                theScale.x *= -1;
 
-            theScale.x *= -1;
-
-            playerBehavior._Transform.localScale = theScale;
+                playerBehavior._Transform.localScale = theScale;
+                isFacingRight = !isFacingRight;
+            }
+            
         }
     }
 }

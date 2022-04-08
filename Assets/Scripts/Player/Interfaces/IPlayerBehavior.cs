@@ -6,4 +6,6 @@ public interface IPlayerBehavior
 {
     public Rigidbody2D Rigidbody { get; }
     public Transform _Transform { get; }
+    public Animator animator { get; set; }
+    public Vector2 vector2 { get;}
 }

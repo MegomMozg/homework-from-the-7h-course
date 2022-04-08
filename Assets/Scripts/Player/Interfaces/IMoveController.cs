@@ -6,7 +6,8 @@ namespace PlatformerMVC
 {
     public interface IMoveController
     {
-        void Move(IPlayerBehavior playerBehavior, ISpriteAnimatorController spriteAnimatorController, LevelObjectView levelObjectView);
+        void Move(IPlayerBehavior playerBehavior);
+        void Jump(IPlayerBehavior playerBehavior, IGroundCheck groundCheck);
     }
 }
 

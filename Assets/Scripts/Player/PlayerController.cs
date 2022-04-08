@@ -6,21 +6,21 @@ namespace PlatformerMVC
 {
     public sealed class PlayerController : IUpdate
     {
-        private ISpriteAnimatorController _spriteAnimatorController;
         private IPlayerBehavior _PlayerBehavior;
         private IMoveController _MoveController;
+        private IGroundCheck _GroundCheck;
 
-        private LevelObjectView _LevelObjectView;
-        public PlayerController(ISpriteAnimatorController spriteAnimatorController)
+        public PlayerController()
         {
-            _spriteAnimatorController = spriteAnimatorController;
             _MoveController = new MoveController();
-            _LevelObjectView = GameObject.FindObjectOfType<LevelObjectView>();
             _PlayerBehavior = GameObject.FindObjectOfType<PlayerBehavior>();
+            _GroundCheck = GameObject.FindObjectOfType<GroundCheck>();
+            _PlayerBehavior.animator = Animator.FindObjectOfType<Animator>();
         }
         public void Update(float deltatime)
         {
-            _MoveController.Move(_PlayerBehavior, _spriteAnimatorController, _LevelObjectView);
+            _MoveController.Move(_PlayerBehavior);
+            _MoveController.Jump(_PlayerBehavior, _GroundCheck);
         }
     }
 }
