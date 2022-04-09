@@ -19,7 +19,6 @@ namespace PlatformerMVC
             BulletController bulletController = new BulletController();
             turelController turelController = new turelController(bulletController);
             PlayerController playerController = new PlayerController();
-            End end = new End();
             
 
             UpdateController updateController = new UpdateController();
@@ -27,7 +26,6 @@ namespace PlatformerMVC
             updateController.AddController(background);
             updateController.AddController(turelController);
             updateController.AddController(playerController);
-            updateController.AddController(end);
             _gameStarter.SetUpdateController(updateController);
         }
     }
