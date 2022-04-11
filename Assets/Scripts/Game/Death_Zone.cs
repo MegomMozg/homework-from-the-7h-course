@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Death_Zone : MonoBehaviour
 {
-    public Collider2D _collider;
+    public Transform _Transform;
 }

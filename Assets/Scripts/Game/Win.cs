@@ -7,6 +7,7 @@ namespace PlatformerMVC
     public class Win : MonoBehaviour
     {
         public Collider2D _collider;
+        public MeshRenderer MeshRenderer;
     }
 }
 

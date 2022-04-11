@@ -6,16 +6,17 @@ namespace PlatformerMVC
 {
     public class MoveController : IMoveController
     {
+        #region Classes
         private Vector2 Vector;
         private bool isFacingRight = true;
+        #endregion
         public void Move(IPlayerBehavior playerBehavior)
         {
             Vector = playerBehavior.vector2;
             Vector.x = Input.GetAxis("Horizontal");
             playerBehavior.animator.SetFloat("Move", Mathf.Abs(Vector.x));
             playerBehavior.Rigidbody.velocity = new Vector2(Vector.x * GameSettings.PLAYER_SPEED, playerBehavior.Rigidbody.velocity.y);
-            
-            
+
             Flip(playerBehavior, Vector.x);
         }
         public void Jump(IPlayerBehavior playerBehavior, IGroundCheck groundCheck)

@@ -7,14 +7,21 @@ namespace PlatformerMVC
 {
     public class End : IUpdate
     {
+        #region Classes
         public event Action GameOver;
         public event Action Winner;
         private Death_Zone _death;
         private Win _win;
-        public End()
+        private FinishBehavior _FinishBehavior;
+        private PlayerController _PlayerController;
+        #endregion
+        public End(PlayerController playerController)
         {
+            #region searization
+            _PlayerController = playerController;
             _death = GameObject.FindObjectOfType<Death_Zone>();
             _win = GameObject.FindObjectOfType<Win>();
+            #endregion
         }
 
         public void Update(float deltatime)
@@ -25,20 +32,34 @@ namespace PlatformerMVC
 
         private void Game_Over()
         {
-            _death._collider = Physics2D.OverlapBox(_death.transform.position, _death.transform.forward, 10f);
-            if (_death._collider.CompareTag("Player"))
+            Collider2D collider = Physics2D.OverlapBox(_death._Transform.position, new Vector2(300, 10), 0f);
+            if (collider.CompareTag("Player"))
             {
+                Restart();
                 GameOver?.Invoke();
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
         private void Winn()
         {
-            _win._collider = Physics2D.OverlapBox(_win.transform.position, _win.transform.forward, 10f);
-            if (_win._collider.CompareTag("Player"))
+            Collider2D collider = Physics2D.OverlapBox(_win.transform.position, new Vector2(9.37f, 20), 0f);
+            if (collider.CompareTag("Player"))
             {
+                #region Bool
+                _win.MeshRenderer.enabled = false;
+                _PlayerController.IsMove = false;
+                #endregion
+                #region Canvas
+                var prefab = Resources.Load<GameObject>(ResourcesPathes.FINISH_CANVAS);
+                var canvas = GameObject.Instantiate(prefab);
+                _FinishBehavior = canvas.GetComponent<FinishBehavior>();
+                _FinishBehavior.OnRestartButtonClick += Restart;
                 Winner?.Invoke();
+                #endregion
             }
+        }
+        private void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
