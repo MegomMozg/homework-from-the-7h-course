@@ -24,7 +24,7 @@ namespace PlatformerMVC
             End end = new End(playerController);
             end.Winner += background.ground;
             #endregion
-            #region Controllers
+            #region Update
             UpdateController updateController = new UpdateController();
             updateController.AddController(bulletController);
             updateController.AddController(background);

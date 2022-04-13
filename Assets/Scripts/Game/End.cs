@@ -47,6 +47,7 @@ namespace PlatformerMVC
                 #region Bool
                 _win.MeshRenderer.enabled = false;
                 _PlayerController.IsMove = false;
+
                 #endregion
                 #region Canvas
                 var prefab = Resources.Load<GameObject>(ResourcesPathes.FINISH_CANVAS);
