@@ -24,36 +24,107 @@ namespace Pathfinding {
 		/// <summary>Current target index</summary>
 		int index;
 
+		bool Istarget;
+
+		AIDestinationSetter PlayerTarget;
+
+		AIPath Settings;
+
 		IAstarAI agent;
+
 		float switchTime = float.PositiveInfinity;
 
-		protected override void Awake () {
+        private void Start()
+        {
+			Patrolmove();
+		}
+        protected override void Awake () {
 			base.Awake();
+			Settings = GetComponent<AIPath>();
+			PlayerTarget = GetComponent<AIDestinationSetter>();
 			agent = GetComponent<IAstarAI>();
 		}
 
 		/// <summary>Update is called once per frame</summary>
-		void Update () {
-			if (targets.Length == 0) return;
+		void Update () 
+		{
+			if (Istarget == false)
+            {
+
+				Patrolmove();
+
+			}
+			else if (Istarget == true)
+			{
+				PlayerOntarget();
+			}
+
+		}
+		/// <summary>
+		/// Reacton in Player
+		/// </summary>
+		/// <param name="collision"></param>
+		#region Reaction
+		public void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+				Istarget = true;
+            }
+        }
+        
+        public void OnTriggerExit2D(Collider2D collision)
+        {
+			if(collision.CompareTag("Player"))
+				StartCoroutine(TimeOnPatrol());
+		}
+		#endregion  
+
+		private void Patrolmove()
+        {
+            #region PlayerSettings
+            Settings.repathRate = 1.6f;
+			PlayerTarget.enabled = false;
+            #endregion
+
+            if (targets.Length == 0) return;
 
 			bool search = false;
 
 			// Note: using reachedEndOfPath and pathPending instead of reachedDestination here because
 			// if the destination cannot be reached by the agent, we don't want it to get stuck, we just want it to get as close as possible and then move on.
-			if (agent.reachedEndOfPath && !agent.pathPending && float.IsPositiveInfinity(switchTime)) {
-				switchTime = Time.time + delay;
-			}
+			//if (agent.reachedEndOfPath && !agent.pathPending && float.IsPositiveInfinity(switchTime)) 
+			//{
+			//	switchTime = Time.time + delay;
+			//}//фиг знает что это
 
-			if (Time.time >= switchTime) {
+			if (Time.time >= switchTime)
+			{
 				index = index + 1;
 				search = true;
 				switchTime = float.PositiveInfinity;
 			}
 
-			index = index % targets.Length;
+			index = (index + 1) % targets.Length;
 			agent.destination = targets[index].position;
 
 			if (search) agent.SearchPath();
+		}
+
+		private void PlayerOntarget()
+        {
+			Settings.repathRate = 0;
+			PlayerTarget.enabled = true;
+
+
+		}
+
+		private IEnumerator TimeOnPatrol()
+        {
+			
+			yield return new WaitForSeconds(10f);
+			Istarget = false;
+
 		}
 	}
 }
