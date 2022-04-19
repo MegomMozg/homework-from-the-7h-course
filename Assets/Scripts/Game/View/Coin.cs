@@ -6,18 +6,18 @@ namespace PlatformerMVC
 {
     public class Coin : MonoBehaviour
     {
-        private ParticleSystem ParticleSystem;
-
-        [System.Obsolete]
+        //private ParticleSystem ParticleSystem;
+        //public CoinController controller;
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Coin"))
-            {
-                collision.gameObject.GetComponent<ParticleSystem>().Play();
-                Destroy(collision.gameObject.GetComponent<SpriteRenderer>());
-                Destroy(collision.gameObject.GetComponent<Collider2D>());
-                Destroy(collision.gameObject, collision.gameObject.GetComponent<ParticleSystem>().startLifetime + collision.gameObject.GetComponent<ParticleSystem>().duration);
-            }
+            //controller.OnTriggerEnter2D(this, collision);
+            //if (collision.gameObject.CompareTag("Coin"))
+            //{
+            //    collision.gameObject.GetComponent<ParticleSystem>().Play();
+            //    Destroy(collision.gameObject.GetComponent<SpriteRenderer>());
+            //    Destroy(collision.gameObject.GetComponent<Collider2D>());
+            //    Destroy(collision.gameObject, 0.1f);
+            //}
             
         }
     }

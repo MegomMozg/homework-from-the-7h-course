@@ -26,7 +26,6 @@ namespace PlatformerMVC
             {
                 playerBehavior.Rigidbody.AddForce(Vector2.up * playerSettings.JumpForce);
             }
-            playerBehavior.animator.StopPlayback();
             groundCheck.OnGround = Physics2D.OverlapCircle(groundCheck.Transform.position, 0.7f, groundCheck.Ground);
             playerBehavior.animator.SetBool("Jump", groundCheck.OnGround);
             groundCheck.OnGravity = Physics2D.OverlapCircle(groundCheck.Transform.position, 0.7f, groundCheck.Gravity);

@@ -57,6 +57,7 @@ namespace PlatformerMVC
                 Winner?.Invoke();
                 #endregion
             }
+
         }
         private void Restart()
         {
