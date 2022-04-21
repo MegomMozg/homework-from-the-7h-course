@@ -1446,6 +1446,7 @@ GameObject:
   - component: {fileID: 1710479768}
   - component: {fileID: 1710479767}
   - component: {fileID: 1710479769}
+  - component: {fileID: 1710479770}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1471,7 +1472,7 @@ MonoBehaviour:
   repathRate: 0
   canSearch: 1
   canMove: 1
-  maxSpeed: 50
+  maxSpeed: 12
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -1591,16 +1592,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710479760}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 1732905681}
-  Waypoints:
-  - {fileID: 1978779748}
-  - {fileID: 1382197839}
 --- !u!58 &1710479767
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1654,6 +1652,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 23.41
+--- !u!114 &1710479770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710479760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e6c29e32504465faa943c537d8029b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  targets:
+  - {fileID: 1978779748}
+  - {fileID: 1382197839}
+  delay: 0
 --- !u!1 &1732905679
 GameObject:
   m_ObjectHideFlags: 0
