@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlatformerMVC
+namespace PlatformerMVC.game.Background
 {
     public class Background : IUpdate
     {

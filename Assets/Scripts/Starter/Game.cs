@@ -2,6 +2,11 @@ using UnityEngine;
 
 namespace PlatformerMVC
 {
+    #region Using
+    using PlatformerMVC.game;
+    using PlatformerMVC.game.Background;
+    using PlatformerMVC.game.GenerateLevel;
+    #endregion
     public sealed class Game
     {
         #region Close
@@ -9,7 +14,9 @@ namespace PlatformerMVC
         public void Start(GameStarter gameStarter)
         {
             _gameStarter = gameStarter;
-            BeginGame();
+            if (gameStarter.ControllerLevel == true) BeginGame();
+            else if (gameStarter.ControllerLevel == false) NewBegingame();
+
         }
         #endregion
         private void BeginGame()
@@ -19,6 +26,7 @@ namespace PlatformerMVC
             turelController turelController = new turelController(bulletController);
             PlayerController playerController = new PlayerController();
             Background background = new Background();
+
             #endregion
             #region EndGame
             End end = new End(playerController);
@@ -31,6 +39,16 @@ namespace PlatformerMVC
             updateController.AddController(turelController);
             updateController.AddController(playerController);
             updateController.AddController(end);
+            _gameStarter.SetUpdateController(updateController);
+            #endregion
+        }
+        private void NewBegingame()
+        {
+            PlayerController playerController = new PlayerController();
+            GenerateLevelController generateLevelController = new GenerateLevelController();
+            #region Update
+            UpdateController updateController = new UpdateController();
+            updateController.AddController(playerController);
             _gameStarter.SetUpdateController(updateController);
             #endregion
         }

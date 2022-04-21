@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace PlatformerMVC
+namespace PlatformerMVC.game
 {
     public class End : IUpdate
     {
