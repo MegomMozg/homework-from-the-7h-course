@@ -22,8 +22,8 @@ namespace PlatformerMVC
         private void BeginGame()
         {
             #region Classes
-            BulletController bulletController = new BulletController();
-            turelController turelController = new turelController(bulletController);
+            //BulletController bulletController = new BulletController();
+            //turelController turelController = new turelController(bulletController);
             PlayerController playerController = new PlayerController();
             Background background = new Background();
 
@@ -34,9 +34,9 @@ namespace PlatformerMVC
             #endregion
             #region Update
             UpdateController updateController = new UpdateController();
-            updateController.AddController(bulletController);
+            //updateController.AddController(bulletController);
             updateController.AddController(background);
-            updateController.AddController(turelController);
+            //updateController.AddController(turelController);
             updateController.AddController(playerController);
             updateController.AddController(end);
             _gameStarter.SetUpdateController(updateController);

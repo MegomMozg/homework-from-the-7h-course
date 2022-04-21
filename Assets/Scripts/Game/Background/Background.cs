@@ -7,10 +7,13 @@ namespace PlatformerMVC.game.Background
     public class Background : IUpdate
     {
         private Transform _transform;
-        public bool IsBackground = true;
+        public bool IsBackground;
+        private GameSettings _gameSettings;
         public Background()
         {
             _transform = BackGroundBehavior.FindObjectOfType<BackGroundBehavior>()._transform;
+            _gameSettings = Resources.Load<GameSettings>(ResourcesPathes.GAME_SETTINGS);
+            IsBackground = _gameSettings.Background;
         }
         public void Update(float deltatime)
         {
