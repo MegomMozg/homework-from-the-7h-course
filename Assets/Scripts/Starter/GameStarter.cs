@@ -5,6 +5,7 @@ namespace PlatformerMVC
 {
     public sealed class GameStarter : MonoBehaviour
     {
+        public bool ControllerLevel;
         private IUpdateController _mainUpdateController;
 
         private void Start()

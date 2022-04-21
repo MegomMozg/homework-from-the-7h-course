@@ -6,8 +6,8 @@ namespace PlatformerMVC
 {
     public interface IMoveController
     {
-        void Move(IPlayerBehavior playerBehavior);
-        void Jump(IPlayerBehavior playerBehavior, IGroundCheck groundCheck);
+        void Move(IPlayerBehavior playerBehavior, PlayerSettings playerSettings);
+        void Jump(IPlayerBehavior playerBehavior, IGroundCheck groundCheck, PlayerSettings playerSettings);
     }
 }
 
