@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace PlatformerMVC
 {
+    [AddComponentMenu(menuName: "Behavior/Update/Game Starter")]
     public sealed class GameStarter : MonoBehaviour
     {
+        public bool ControllerLevel;
         private IUpdateController _mainUpdateController;
 
         private void Start()
