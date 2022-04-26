@@ -27,6 +27,7 @@ namespace PlatformerMVC.game
             _win = GameObject.FindObjectOfType<Win>();
             _GameSettings = Resources.Load<GameSettings>(ResourcesPathes.GAME_SETTINGS);
             #endregion
+            Time.timeScale = 1;
         }
 
         public void Update(float deltatime)
@@ -67,9 +68,14 @@ namespace PlatformerMVC.game
                         #endregion
                         #region Canvas
                         var prefab = Resources.Load<GameObject>(ResourcesPathes.FINISH_CANVAS);
-                        var canvas = GameObject.Instantiate(prefab);
-                        _FinishBehavior = canvas.GetComponent<FinishBehavior>();
-                        _FinishBehavior.OnRestartButtonClick += Restart;
+                        if (Time.timeScale == 1)
+                        {
+                            var canvas = GameObject.Instantiate(prefab);
+                            _FinishBehavior = canvas.GetComponent<FinishBehavior>();
+                            _FinishBehavior.OnRestartButtonClick += Restart;
+                        }
+                        Time.timeScale = 0;
+
                         Winner?.Invoke();
                         #endregion
                     }
