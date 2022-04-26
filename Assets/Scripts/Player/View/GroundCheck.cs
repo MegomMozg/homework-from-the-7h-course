@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[AddComponentMenu(menuName: "Behavior/Player/GroundCheck")]
 public class GroundCheck : MonoBehaviour, IGroundCheck
 {
     [SerializeField] private LayerMask _Ground;

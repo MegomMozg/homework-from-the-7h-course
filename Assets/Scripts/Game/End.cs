@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace PlatformerMVC.game
 {
+    using PlatformerMVC.game.Coin;
     public class End : IUpdate
     {
         #region Classes
@@ -12,14 +13,16 @@ namespace PlatformerMVC.game
         public event Action Winner;
         private Death_Zone _death;
         private Win _win;
+        private CoinController _Controller;
         private FinishBehavior _FinishBehavior;
         private PlayerController _PlayerController;
         private GameSettings _GameSettings;
         #endregion
-        public End(PlayerController playerController)
+        public End(PlayerController playerController, CoinController coinController)
         {
             #region searization
             _PlayerController = playerController;
+            _Controller = coinController;
             _death = GameObject.FindObjectOfType<Death_Zone>();
             _win = GameObject.FindObjectOfType<Win>();
             _GameSettings = Resources.Load<GameSettings>(ResourcesPathes.GAME_SETTINGS);
@@ -51,23 +54,27 @@ namespace PlatformerMVC.game
             bool IsWin = _GameSettings.Finish;
             if (IsWin == true)
             {
-                Collider2D collider = Physics2D.OverlapBox(_win.transform.position, new Vector2(9.37f, 20), 0f);
-                if (collider.CompareTag("Player"))
+                if (_Controller.Count == 3)
                 {
-                    #region Bool
-                    _win.MeshRenderer.enabled = false;
-                    _PlayerController.IsMove = false;
-                    _PlayerController.Deth(true);
+                    Collider2D collider = Physics2D.OverlapBox(_win.transform.position, new Vector2(9.37f, 57.8f), 0f);
+                    if (collider.CompareTag("Player"))
+                    {
+                        #region Bool
+                        _win.MeshRenderer.enabled = false;
+                        _PlayerController.IsMove = false;
+                        _PlayerController.Deth(true);
 
-                    #endregion
-                    #region Canvas
-                    var prefab = Resources.Load<GameObject>(ResourcesPathes.FINISH_CANVAS);
-                    var canvas = GameObject.Instantiate(prefab);
-                    _FinishBehavior = canvas.GetComponent<FinishBehavior>();
-                    _FinishBehavior.OnRestartButtonClick += Restart;
-                    Winner?.Invoke();
-                    #endregion
+                        #endregion
+                        #region Canvas
+                        var prefab = Resources.Load<GameObject>(ResourcesPathes.FINISH_CANVAS);
+                        var canvas = GameObject.Instantiate(prefab);
+                        _FinishBehavior = canvas.GetComponent<FinishBehavior>();
+                        _FinishBehavior.OnRestartButtonClick += Restart;
+                        Winner?.Invoke();
+                        #endregion
+                    }
                 }
+                
             }
             else return;
         }

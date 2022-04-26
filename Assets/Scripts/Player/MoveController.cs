@@ -36,7 +36,7 @@ namespace PlatformerMVC
             }
             else
             {
-                playerSettings.JumpForce = 1400;
+                playerSettings.JumpForce = 2000;
                 playerBehavior.Rigidbody.gravityScale = 1;
             }
 

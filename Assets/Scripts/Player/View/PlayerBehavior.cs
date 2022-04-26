@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[AddComponentMenu(menuName: "Behavior/Player/Player")]
 public class PlayerBehavior : MonoBehaviour, IPlayerBehavior
 {
     [SerializeField]private Rigidbody2D _rigidbody;

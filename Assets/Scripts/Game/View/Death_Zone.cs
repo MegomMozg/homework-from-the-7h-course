@@ -2,7 +2,12 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Death_Zone : MonoBehaviour
+namespace PlatformerMVC.game
 {
-    public Transform _Transform;
+    [AddComponentMenu(menuName: "Behavior/Game/Death Zone")]
+    public class Death_Zone : MonoBehaviour
+    {
+        public Transform _Transform;
+    }
+
 }

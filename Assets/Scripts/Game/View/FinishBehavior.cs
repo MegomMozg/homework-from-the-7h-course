@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class FinishBehavior : MonoBehaviour
+namespace PlatformerMVC.game
 {
-    [SerializeField] private Button _restartButton;
-
-    public event Action OnRestartButtonClick;
-
-    public void Awake()
+    [AddComponentMenu(menuName: "Behavior/Game/Finish")]
+    public class FinishBehavior : MonoBehaviour
     {
-        _restartButton.onClick.AddListener(RestartButton);
-    }
+        [SerializeField] private Button _restartButton;
 
-    private void RestartButton()
-    {
-        OnRestartButtonClick?.Invoke();
+        public event Action OnRestartButtonClick;
+
+        public void Awake()
+        {
+            _restartButton.onClick.AddListener(RestartButton);
+        }
+
+        private void RestartButton()
+        {
+            OnRestartButtonClick?.Invoke();
+        }
     }
 }
+

@@ -5,39 +5,54 @@ using UnityEngine;
 
 namespace PlatformerMVC.game.Coin
 {
-    public class CoinController //: IUpdate
+    public class CoinController : IUpdate
     {
-        //private List<Coin> coins;
-        //public CoinController()
-        //{
-        //    Coin[] arrayCoins = GameObject.FindObjectsOfType<Coin>();
-        //    coins.AddRange(arrayCoins);
-        //}
-
-        //public void Update(float deltaTime)
-        //{
-        //    foreach (Coin coin in coins)
-        //    {
-        //        UpdateCoin(coin, deltaTime);
-        //    }
-        //}
-
-        //public void UpdateCoin(Coin coin, float deltaTime)
-        //{
-
-        //}
-
-        public void OnTriggerEnter2D(Coin coin, Collider2D collision)
+        private CoinList _coins;
+        private CoinCanvas _Canvas;
+        private GameSettings _Settings;
+        public int Count;
+        public CoinController()
         {
-            if (collision.gameObject.CompareTag("Coin"))
+            _Settings = Resources.Load<GameSettings>(ResourcesPathes.GAME_SETTINGS);
+            _Canvas = Object.FindObjectOfType<CoinCanvas>();
+            _coins = Object.FindObjectOfType<CoinList>();
+            Coin[] arrayCoins = GameObject.FindObjectsOfType<Coin>();
+            _coins.coins.AddRange(arrayCoins);
+            if (_Settings.Coin == true)
             {
-                collision.gameObject.GetComponent<ParticleSystem>().Play();
-                //Destroy(collision.gameObject.GetComponent<SpriteRenderer>());
-                //Destroy(collision.gameObject.GetComponent<Collider2D>());
-                //Destroy(collision.gameObject, 0.1f);
-            }
+                foreach (Coin coin in _coins.coins)
+                {
+                    coin.OnCollisionEnter += UpdateCoin;
 
+                }
+
+            }
+            else return;
         }
+
+        public void Update(float deltaTime)
+        {
+            QuestCoins();
+        }
+        private void UpdateCoin(Coin coin)
+        {
+            Count++;
+            coin.gameObject.GetComponent<ParticleSystem>().Play();
+            Object.Destroy(coin.gameObject.GetComponent<SpriteRenderer>());
+            Object.Destroy(coin.gameObject.GetComponent<Collider2D>());
+            Object.Destroy(coin.gameObject, 0.1f);
+            _coins.coins.Remove(coin);
+            
+        }
+
+        
+
+        public void QuestCoins()
+        {
+            int CountMax = 3;
+            _Canvas.Score.text ="Score: " + Count.ToString() + "/" + CountMax.ToString();
+        }
+        
     }
 }
 

@@ -2,11 +2,10 @@ using UnityEngine;
 
 namespace PlatformerMVC
 {
-    #region Using
     using PlatformerMVC.game;
     using PlatformerMVC.game.Background;
     using PlatformerMVC.game.GenerateLevel;
-    #endregion
+    using PlatformerMVC.game.Coin;
     public sealed class Game
     {
         #region Close
@@ -26,15 +25,16 @@ namespace PlatformerMVC
             //turelController turelController = new turelController(bulletController);
             PlayerController playerController = new PlayerController();
             Background background = new Background();
+            CoinController coinController = new CoinController();
 
             #endregion
             #region EndGame
-            End end = new End(playerController);
+            End end = new End(playerController, coinController);
             end.Winner += background.ground;
             #endregion
             #region Update
             UpdateController updateController = new UpdateController();
-            //updateController.AddController(bulletController);
+            updateController.AddController(coinController);
             updateController.AddController(background);
             //updateController.AddController(turelController);
             updateController.AddController(playerController);
